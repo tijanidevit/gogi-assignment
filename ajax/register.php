@@ -23,15 +23,6 @@
 			return  displayWarning('password is required and cannot be empty');
 		}
 
-		if (!isset($_POST['phone']) || $_POST['phone']=="") {
-			return  displayWarning('Phone is required and cannot be empty');
-		}
-
-		if ($_POST['password'] != $_POST['c_password']) {
-			return  displayWarning('Both Passwords must be the same');
-		}
-
-
 
 		$matric = $_POST['matric'];
 		$email = $_POST['email'];
