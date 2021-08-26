@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gogi - Admin and Dashboard Template</title>
+    <title>Assignment Feedback System</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="./assets/media/image/favicon.png" />
@@ -60,9 +60,10 @@
                         <h5>Sign in</h5>
 
                         <!-- form -->
-                        <form action="dashboard" method="post">
+                        <form id="loginForm" method="post">
+                            <div id="result"></div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Username or email" required autofocus>
+                                <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="Password" required>
@@ -72,12 +73,11 @@
                                     <input type="checkbox" class="custom-control-input" checked="" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">Remember me</label>
                                 </div>
-                                <a href="recovery-password.html">Reset password</a>
+                                <a href="#">Reset password</a>
                             </div>
                             <button class="btn btn-primary btn-block">Sign in</button>
 
                         </form>
-                        <!-- ./ form -->
 
                     </div>
 
