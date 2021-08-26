@@ -38,7 +38,7 @@
 		$password = $_POST['password'];
 		$password = md5($_POST['password']);
 
-		$image = upload_file($_FILES['image'],'../uploads/student/images');
+		$image = upload_file($_FILES['image'],'../uploads/students/images');
 
 		
 		if ($student_obj->check_email_existence($email)) {
