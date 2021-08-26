@@ -1,7 +1,7 @@
 <?php
     class DB {
         public $host = 'localhost';
-        public $dbname = 'finaxo';
+        public $dbname = 'gogi_assignment';
         public $password = '';
         public $username = 'root';
         

@@ -38,7 +38,7 @@
 		if ($student_obj->register($matric_no,$fullname,$image,$email,$password)) {
 			$student = $student_obj->fetch_student($email);
 			 
-			$_SESSION['gigo_student'] = $student;
+			$_SESSION['gogi_student'] = $student;
 			
 			return 1;
 		}
