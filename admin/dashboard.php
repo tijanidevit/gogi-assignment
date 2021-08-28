@@ -11,6 +11,10 @@
     $lecturer_obj = new Lecturers();
     $student_obj = new Students();
 
+    $students_num = $student_obj->students_num();
+    $lecturers_num = $lecturer_obj->lecturers_num();
+    $assignments_num = $assignment_obj->assignments_num();
+    $assignment_submissions_num = $assignment_submission_obj->assignment_submissions_num();
 ?>
 <!doctype html>
 <html lang="en">
