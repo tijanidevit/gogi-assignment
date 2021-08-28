@@ -4,6 +4,13 @@
         header('location: ./');
         exit();
     }
+
+    include_once '../core/students.class.php';
+    include_once '../core/lecturers.class.php';
+
+    $lecturer_obj = new Lecturers();
+    $student_obj = new Students();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -42,7 +49,7 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Welcome back, Bony</h3>
+                            <h3>Welcome back, Administrator</h3>
                             <p class="text-muted">Today is another good day.</p>
                         </div>
                         <div class="mt-3 mt-md-0">
@@ -64,7 +71,7 @@
                                             <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
                                                     <h5>Students</h5>
-                                                    <div>Last month targets</div>
+                                                    <div>Total students synchronized</div>
                                                 </div>
                                                 <h3 class="text-success mb-0">30000</h3>
                                             </div>

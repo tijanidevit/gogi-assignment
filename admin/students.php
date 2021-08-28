@@ -66,9 +66,9 @@
                                                 <tr>
                                                     <th>S/N</th>
                                                     <th>Picture</th>
+                                                    <th>Matric No</th>
                                                     <th>Fullname</th>
-                                                    <th>Course(s)</th>
-                                                    <th></th>
+                                                    <th>Email Address</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -86,7 +86,9 @@
                                                         <td>
                                                             <?php echo $student['fullname'] ?>
                                                         </td>
-                                                        <td>COM 101</td>
+                                                        <td>
+                                                            <?php echo $student['email'] ?>
+                                                        </td>
                                                         <!-- <td>
                                                             <a href="edit-lecturer" class="btn btn-primary btn-sm">
                                                                 Edit
