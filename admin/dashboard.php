@@ -2,6 +2,7 @@
     session_start();
     if (!isset($_SESSION['gogi_admin'])) {
         header('location: ./');
+        exit();
     }
 ?>
 <!doctype html>

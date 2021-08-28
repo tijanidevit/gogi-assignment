@@ -1,3 +1,12 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['gogi_admin'])) {
+        header('location: ./');
+        exit();
+    }
+
+    include_once '../core/students.class.php';
+?>
 <!doctype html>
 <html lang="en">
 
@@ -60,23 +69,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>
-                                                        <span class="avatar avatar-state-success">
-                                                            <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        Mr. Adewale
-                                                    </td>
-                                                    <td>COM 101</td>
-                                                    <td>
-                                                        <a href="edit-lecturer" class="btn btn-primary btn-sm">
-                                                            Edit
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                <?php foreach ($students as $student): ?>
+                                                    <tr>
+                                                        <td>1 </td>
+                                                        <td>
+                                                            <span class="avatar avatar-state-success">
+                                                                <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            Mr. Adewale
+                                                        </td>
+                                                        <td>COM 101</td>
+                                                        <!-- <td>
+                                                            <a href="edit-lecturer" class="btn btn-primary btn-sm">
+                                                                Edit
+                                                            </a>
+                                                        </td> -->
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -138,6 +149,7 @@
                     beforeSend: function() {
                     },
                     success: function(data){
+                        console.log(data);
                     }
                 })
 
