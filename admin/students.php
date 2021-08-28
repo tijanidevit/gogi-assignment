@@ -6,6 +6,9 @@
     }
 
     include_once '../core/students.class.php';
+    $student_obj = new Students();
+
+    $students = $student_obj->fetch_students();
 ?>
 <!doctype html>
 <html lang="en">
@@ -69,16 +72,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($students as $student): ?>
+                                                <?php $sn = 0; foreach ($students as $student): $sn++ ?>
                                                     <tr>
-                                                        <td>1 </td>
+                                                        <td><?php echo $sn ?></td>
                                                         <td>
                                                             <span class="avatar avatar-state-success">
                                                                 <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            Mr. Adewale
+                                                            <?php echo $student['matric_no'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $student['fullname'] ?>
                                                         </td>
                                                         <td>COM 101</td>
                                                         <!-- <td>

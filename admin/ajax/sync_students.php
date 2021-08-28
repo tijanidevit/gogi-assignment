@@ -1,6 +1,6 @@
 <?php 
 
-require 'vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 
 include_once '../../core/core.function.php';
@@ -11,13 +11,15 @@ function register(){
 
 
 	$gen = new \RandomUser\Generator();
-	$users = $gen->getUser(5);
 
-	var_dump($users);
+
 	$student_obj = new students();
 
-	foreach ($users as $user) {
-		$student_obj->register('PN/CS/19/'.rand(1111,9999),$user->getName(),'students.png',$user->getEmail(),md5('password'));
+	for ($i=0; $i < 10; $i++) {
+		$matric_no = 'PN/CS/19/'.rand(1111,9999);
+		echo $matric_no;
+		$user =  $gen->getUser();
+		$student_obj->register($matric_no,$user->getName(),'students.png',$user->getEmail(),md5('password'));
 	}
 
 	return 1;	

@@ -8,7 +8,7 @@
         }
         
         function fetch_students(){
-            return DB::fetchAll("SELECT * FROM students ORDER BY name ASC",[]);
+            return DB::fetchAll("SELECT * FROM students ORDER BY fullname ASC",[]);
         }
         function fetch_student($email){
             return DB::fetch("SELECT * FROM students WHERE email = ? OR id = ?",[$email,$email] );
