@@ -1,7 +1,7 @@
 <?php 
     session_start();
-    if (isset($_SESSION['gogi_admin'])) {
-        header('location: dashboard');
+    if (!isset($_SESSION['gogi_admin'])) {
+        header('location: ./');
     }
 ?>
 <!doctype html>

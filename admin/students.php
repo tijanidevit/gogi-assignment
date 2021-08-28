@@ -130,6 +130,17 @@
 
             $('#sync-button').click(function() {
 
+                $.ajax({
+                    url:'ajax/sync_students.php',
+                    type: 'POST',
+                    data : {},
+                    cache: false,
+                    beforeSend: function() {
+                    },
+                    success: function(data){
+                    }
+                })
+
                 timeOutLoader(() => {
                     $('#close-button').click();
                     setTimeout(() => {
