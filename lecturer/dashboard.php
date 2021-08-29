@@ -7,6 +7,7 @@
     $lecturer = $_SESSION['gogi_lecturer'];
 
     include_once '../core/lecturers.class.php';
+    include_once '../core/core.function.php';
     $lecturer_obj = new Lecturers();
     $lecturer_id = $lecturer['id'];
 
@@ -79,7 +80,7 @@
                                             <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
                                                     <h5>Total Submissions</h5>
-                                                    <div>No of times students submitted solutions to your assignemnts</div>
+                                                    <div>No of times students submitted solutions to your assignments</div>
                                                 </div>
                                                 <div>
                                                     <h3 class="text-info mb-0"><?php echo $lecturer_obj->fetch_lecturer_assignment_submissions_num($lecturer_id) ?></h3>
@@ -113,17 +114,13 @@
                                                 <div>
                                                     <h6 class="d-flex justify-content-between mb-4">
                                                         <span>
-                                                            <a href="#" class="link-1">Mr Adewale</a> reviewed your assignment
+                                                            <a href="#" class="link-1"><?php echo $solution['fullname'] ?></a> submitted an answer
                                                         </span>
-                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                        <span class="text-muted font-weight-normal"><?php echo format_date($solution['created_at']); ?></span>
                                                     </h6>
                                                     <a href="#">
                                                         <div class="mb-3 border p-3 border-radius-1">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                            aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                            nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                            reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                            officiis quidem voluptate. <a href="assignment-review-details" class="badge badge-sm badge-primary">Details</a>
+                                                            <?php echo $solution['solution'] ?>. <a href="assignment-review-details?id=<?php echo $solution['id'] ?>" class="badge badge-sm badge-primary">Details</a>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -350,16 +347,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>COM 101</td>
-                                                    <td>What is your name?</td>
-                                                    <td>
-                                                        <span class="badge bg-secondary-bright text-secondary">60 marks</span>
-                                                    </td>
-                                                    <td>2020/02/28</td>
-                                                    <td></td>
-                                                </tr>
+                                                <?php $sn=0; foreach ($assignments as $assignment): $sn++; ?>
+                                                    <tr>
+                                                        <td><?php echo $sn; ?></td>
+                                                        <td><?php echo $assignment['course_code'] ?></td>
+                                                        <td><?php echo $assignment['question'] ?></td>
+                                                        <td>
+                                                            <span class="badge bg-secondary-bright text-secondary"><?php echo $assignment['max_grade'] ?> marks</span>
+                                                        </td>
+                                                        <td><?php echo format_date($assignment['created_at']) ?></td>
+                                                        <td></td>
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>

@@ -32,7 +32,7 @@
         }
 
         function login($email,$password){
-            if (DB::num_row("SELECT id FROM students WHERE email = ?  AND password = ? ", [$email,$password]) > 0) {
+            if (DB::num_row("SELECT id FROM students WHERE email = ? AND password = ? ", [$email,$password]) > 0) {
                 return true;
             }
             else{
