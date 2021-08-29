@@ -77,11 +77,11 @@
                                                         <td><?php echo $sn ?></td>
                                                         <td>
                                                             <span class="avatar avatar-state-success">
-                                                                <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
+                                                                <img src="../uploads/lecturers/images/<?php echo $lecturer['image'] ?>" class="rounded-circle" alt="image">
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            <?php echo $lecturer['matric_no'] ?>
+                                                            <?php echo $lecturer['staff_id'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $lecturer['fullname'] ?>
