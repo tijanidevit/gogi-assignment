@@ -23,19 +23,24 @@ function register(){
 		return  displayWarning('password is required and cannot be empty');
 	}
 
+	if ($_POST['password'] != $_POST['c_password']) {
+		return  displayWarning('Both passwords must be the same');
+	}
+
 
 	$staff_id = $_POST['staff_id'];
 	$email = $_POST['email'];
+	$fullname = $_POST['fullname'];
 	$password = $_POST['password'];
 	$password = md5($_POST['password']);
 
-	$image = upload_file($_FILES['image'],'../../uploads/lecturers/images');
+	$image = upload_file($_FILES['image'],'../../uploads/lecturers/images/');
 
 
-	if ($student_obj->check_email_existence($email)) {
+	if ($lecturer_obj->check_email_existence($email)) {
 		return  displayWarning('A lecturer already registered with this email '. $email);
 	}
-	if ($student_obj->register($staff_id,$fullname,$image,$email,$password)) {
+	if ($lecturer_obj->register($staff_id,$fullname,$image,$email,$password)) {
 		return displaySuccess('Lecturer added successfully');
 	}
 	else{

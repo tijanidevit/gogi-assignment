@@ -48,9 +48,8 @@ if (!isset($_SESSION['gogi_admin'])) {
                         <div class="card" id="review-section">
                             <div class="card-body">
                                 <form id="lecturerForm" enctype="multipart/form-data" method="post">
-
+                                    <div id="result"></div>
                                     <div class="row">
-                                        <div id="result"></div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="">Fullname</label>
@@ -144,7 +143,9 @@ if (!isset($_SESSION['gogi_admin'])) {
         $.ajax({
             url:'ajax/add_lecturer.php',
             type: 'POST',
-            data : $(this).serialize(),
+            data : new FormData(this),
+            contentType: false,
+            processData: false,
             cache: false,
             beforeSend: function() {
                 $('#spinner').show();
@@ -152,7 +153,7 @@ if (!isset($_SESSION['gogi_admin'])) {
             },
             success: function(data){
                 if (data.includes('successf')) {
-                    $(#lecturerForm)[0].clear();
+                    $('#lecturerForm')[0].reset();
                 }
                 $('#result').html(data);
                 $('#result').fadeIn();
