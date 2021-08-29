@@ -7,9 +7,13 @@
 
     include_once '../core/students.class.php';
     include_once '../core/lecturers.class.php';
+    include_once '../core/assignments.class.php';
+    include_once '../core/assignment_submissions.class.php';
 
     $lecturer_obj = new Lecturers();
     $student_obj = new Students();
+    $assignment_obj = new Assignments();
+    $assignment_submission_obj = new Assignment_submissions();
 
     $students_num = $student_obj->students_num();
     $lecturers_num = $lecturer_obj->lecturers_num();
@@ -77,18 +81,18 @@
                                                     <h5>Students</h5>
                                                     <div>Total students synchronized</div>
                                                 </div>
-                                                <h3 class="text-success mb-0">30000</h3>
+                                                <h3 class="text-success mb-0"><?php echo $students_num ?> </h3>
                                             </div>
                                             <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
                                                     <h5>Lecturers</h5>
-                                                    <div>No of times you submitted you assignemnts</div>
+                                                    <div>No of added lecturers</div>
                                                 </div>
                                                 <div>
-                                                    <h3 class="text-info mb-0">65</h3>
+                                                    <h3 class="text-info mb-0"><?php echo $lecturers_num ?></h3>
                                                 </div>
                                             </div>
-                                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <!-- <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
                                                     <h5>Courses</h5>
                                                     <div>Total products ordered</div>
@@ -96,7 +100,7 @@
                                                 <div>
                                                     <h3 class="text-primary mb-0">90</h3>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +121,7 @@
                                                     <h5>Assignments</h5>
                                                     <div>Last month targets</div>
                                                 </div>
-                                                <h3 class="text-success mb-0">30000</h3>
+                                                <h3 class="text-success mb-0"><?php echo $assignments_num ?></h3>
                                             </div>
                                             <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
@@ -125,10 +129,10 @@
                                                     <div>No of times you submitted you assignemnts</div>
                                                 </div>
                                                 <div>
-                                                    <h3 class="text-info mb-0">65</h3>
+                                                    <h3 class="text-info mb-0"><?php echo $assignment_submissions_num ?></h3>
                                                 </div>
                                             </div>
-                                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <!-- <div class="list-group-item d-flex justify-content-between align-items-center px-0">
                                                 <div>
                                                     <h5>Missed Assignments</h5>
                                                     <div>Total products ordered</div>
@@ -136,7 +140,7 @@
                                                 <div>
                                                     <h3 class="text-danger mb-0">90</h3>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>

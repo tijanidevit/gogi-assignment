@@ -1,3 +1,15 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['gogi_admin'])) {
+        header('location: ./');
+        exit();
+    }
+    include_once '../core/lecturers.class.php';
+
+    $lecturer_obj = new Lecturers();
+
+    $lecturers = $lecturer_obj->fetch_lecturers();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -38,7 +50,7 @@
                         </div>
                         <div class="mt-3 mt-md-0">
                             <div id="dashboard-date" class="btn btn-outline-light">
-                                <a class="btn btn-primary" href="new-lecturer">Register new account</a>
+                                <a class="btn btn-primary" href="new-lecturer">Register new lecturer's account</a>
                             </div>
                         </div>
                     </div>
@@ -54,29 +66,36 @@
                                                 <tr>
                                                     <th>S/N</th>
                                                     <th>Picture</th>
+                                                    <th>Matric No</th>
                                                     <th>Fullname</th>
-                                                    <th>Course(s)</th>
-                                                    <th></th>
+                                                    <th>Email Address</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>
-                                                        <span class="avatar avatar-state-success">
-                                                            <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        Mr. Adewale
-                                                    </td>
-                                                    <td>COM 101</td>
-                                                    <td>
-                                                        <a href="edit-lecturer" class="btn btn-primary btn-sm">
-                                                            Edit
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                <?php $sn = 0; foreach ($lecturers as $lecturer): $sn++ ?>
+                                                    <tr>
+                                                        <td><?php echo $sn ?></td>
+                                                        <td>
+                                                            <span class="avatar avatar-state-success">
+                                                                <img src="../assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $lecturer['matric_no'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $lecturer['fullname'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $lecturer['email'] ?>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <a href="edit-lecturer" class="btn btn-primary btn-sm">
+                                                                Edit
+                                                            </a>
+                                                        </td> -->
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
