@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['gogi_lecturer'])) {
+        header('location: ./');
+        exit();
+    }
+    $lecturer = $_SESSION['gogi_lecturer'];
+?>
 <!doctype html>
 <html lang="en">
 
@@ -35,7 +43,7 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Welcome back, Bony</h3>
+                            <h3>Welcome back, <?php echo $ ?></h3>
                             <p class="text-muted">Today is another good day.</p>
                         </div>
                         <div class="mt-3 mt-md-0">

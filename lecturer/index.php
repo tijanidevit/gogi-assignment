@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if (isset($_SESSION['gogi_lecturer'])) {
+        header('location: dashboard');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -60,21 +68,31 @@
                         <h5>Sign in</h5>
 
                         <!-- form -->
-                        <form action="dashboard" method="post">
+                        <form id="loginForm" method="post">
+                            <div id="result"></div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Username or email" required autofocus>
+                                <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="form-group d-flex justify-content-between">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" checked="" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">Remember me</label>
                                 </div>
-                                <a href="recovery-password.html">Reset password</a>
+                                <a href="#">Reset password</a>
                             </div>
-                            <button class="btn btn-primary btn-block">Sign in</button>
+                            <button class="btn btn-primary btn-block" type="submit">
+                                <span class="spinner" id="spinner" style="display: none;">
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                </span>
+                                <span class="btnText">
+                                    Login
+                                </span>
+                            </button>
 
                         </form>
                         <!-- ../ form -->
@@ -100,3 +118,31 @@
 </body>
 
 </html>
+
+
+
+<script>
+    $('#loginForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'ajax/login.php',
+            type: 'POST',
+            data : $(this).serialize(),
+            cache: false,
+            beforeSend: function() {
+                $('#spinner').show();
+                $('#result').hide();
+            },
+            success: function(data){
+                if (data == 1) {
+                    location.href = 'dashboard';
+                }
+                else{
+                    $('#result').html(data);
+                    $('#result').fadeIn();
+                    $('#spinner').hide();
+                }
+            }
+        })
+    })
+</script>
