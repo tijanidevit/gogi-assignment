@@ -44,15 +44,43 @@
         function fetch_lecturer_assignments($lecturer_id){
             return DB::fetchAll("SELECT *,assignments.id FROM assignments
             JOIN lecturers on lecturers.id = assignments.lecturer_id
+            JOIN courses on courses.id = assignments.course_id
             WHERE assignments.lecturer_id = ?
             ORDER BY assignments.id DESC ",[$lecturer_id]);
+        }
+        function fetch_lecturer_assignments_num($lecturer_id){
+            return DB::num_row("SELECT id FROM assignments WHERE assignments.lecturer_id = ? ",[$lecturer_id]);
         }
 
         function fetch_limited_lecturer_assignments($lecturer_id,$limit){
             return DB::fetchAll("SELECT *,assignments.id FROM assignments
             JOIN lecturers on lecturers.id = assignments.lecturer_id
+            JOIN courses on courses.id = assignments.course_id
             WHERE assignments.lecturer_id = ?
             ORDER BY assignments.id DESC LIMIT $limit",[$lecturer_id]);
+        }
+
+
+        function fetch_lecturer_assignment_submissions($lecturer_id){
+            return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
+            JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            JOIN courses on courses.id = assignments.course_id
+            WHERE assignments.lecturer_id = ?
+            ORDER BY assignment_submissions.id DESC ",[$lecturer_id]);
+        }
+        function fetch_lecturer_assignment_submissions_num($lecturer_id){
+            return DB::num_row("SELECT assignment_submissions.id FROM assignment_submissions 
+            JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            JOIN courses on courses.id = assignments.course_id
+            WHERE assignments.lecturer_id = ? ",[$lecturer_id]);
+        }
+
+        function fetch_limited_lecturer_assignment_submissions($lecturer_id,$limit){
+            return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
+            JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            JOIN courses on courses.id = assignments.course_id
+            WHERE assignments.lecturer_id = ?
+            ORDER BY assignment_submissions.id DESC LIMIT $limit",[$lecturer_id]);
         }
     }
 ?>

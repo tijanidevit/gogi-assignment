@@ -41,20 +41,20 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" title="User menu" data-toggle="dropdown">
                             <figure class="avatar avatar-sm">
-                                <img src="../assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="avatar">
+                                <img src="../uploads/lecturers/images/<?php echo $lecturer['image'] ?>" class="rounded-circle" alt="avatar">
                             </figure>
-                            <span class="ml-2 d-sm-inline d-none">Bony Gidden</span>
+                            <span class="ml-2 d-sm-inline d-none"><?php echo $lecturer['fullname'] ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
                             <div class="text-center py-4">
                                 <figure class="avatar avatar-lg mb-3 border-0">
-                                    <img src="../assets/media/image/user/man_avatar3.jpg" class="rounded-circle" alt="image">
+                                    <img src="../uploads/lecturers/images/<?php echo $lecturer['image'] ?>" class="rounded-circle" alt="image">
                                 </figure>
-                                <h5 class="text-center">Bony Gidden</h5>
-                                <div class="mb-3 small text-center text-muted">@bonygidden</div>
+                                <h5 class="text-center"><?php echo $lecturer['fullname'] ?></h5>
+                                <div class="mb-3 small text-center text-muted"><?php echo $lecturer['email'] ?></div>
                             </div>
                             <div class="list-group">
-                                <a href="logout" class="list-group-item text-danger" data-sidebar-target="#settings">Sign Out!</a>
+                                <a href="logout" class="list-group-item text-danger" >Sign Out!</a>
                             </div>
                         </div>
                     </li>

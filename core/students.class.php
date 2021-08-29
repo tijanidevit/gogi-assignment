@@ -44,6 +44,8 @@
         function fetch_student_assignment_submissions($student_id){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
             JOIN students on students.id = assignment_submissions.student_id
+            JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            JOIN courses on courses.id = assignments.course_id
             WHERE assignment_submissions.student_id = ?
             ORDER BY assignment_submissions.id DESC ",[$student_id]);
         }
@@ -51,6 +53,8 @@
         function fetch_limited_student_assignment_submissions($student_id,$limit){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
             JOIN students on students.id = assignment_submissions.student_id
+            JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            JOIN courses on courses.id = assignments.course_id
             WHERE assignment_submissions.student_id = ?
             ORDER BY assignment_submissions.id DESC LIMIT $limit",[$student_id]);
         }
