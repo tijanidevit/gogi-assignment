@@ -7,10 +7,10 @@
             return DB::execute("INSERT INTO courses(course) VALUES(?)", [$course]);
         }
         function fetch_courses(){
-            return DB::fetchAll("SELECT * FROM courses ORDER BY course ",[]);
+            return DB::fetchAll("SELECT * FROM courses ORDER BY course_code ",[]);
         }
         function fetch_limited_courses($limit){
-            return DB::fetchAll("SELECT * FROM courses ORDER BY course LIMIT $limit ",[]);
+            return DB::fetchAll("SELECT * FROM courses ORDER BY course_code LIMIT $limit ",[]);
         }
         function fetch_course($id){
             return DB::fetch("SELECT * FROM courses WHERE id = ? ",[$id] );
@@ -21,7 +21,6 @@
         function update_course($course,$id){
             return DB::execute("UPDATE courses SET course = ?  WHERE id = ? ", [$course,$id]);
         }
-       
         function courses_num(){
             return DB::num_row("SELECT id FROM courses ", []);
         }

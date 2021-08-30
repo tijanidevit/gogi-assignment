@@ -1,10 +1,10 @@
 <?php 
     session_start();
-    if (!isset($_SESSION['gogi_course'])) {
+    if (!isset($_SESSION['gogi_lecturer'])) {
         header('location: ./');
         exit();
     }
-    $course = $_SESSION['gogi_course'];
+    $lecturer = $_SESSION['gogi_lecturer'];
 
     include_once '../core/courses.class.php';
     include_once '../core/core.function.php';
@@ -70,21 +70,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>COM 101</td>
-                                                    <td>What is your name?</td>
-                                                    <td>
-                                                        <a href="course-assigments" class="btn btn-primary btn-sm">
-                                                            Previous Assigments
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="new-assignment" class="btn btn-primary btn-sm">
-                                                            New Assignment
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                <?php $sn = 0; foreach ($courses as $course): $sn++ ?>
+                                                    <tr>
+                                                        <td><?php echo $sn ?> </td>
+                                                        <td><?php echo $course['course_code'] ?></td>
+                                                        <td><?php echo $course['course_title'] ?></td>
+                                                        <td>
+                                                            <a href="course-assigments?id=<?php echo $course['id'] ?>" class="btn btn-primary btn-sm">
+                                                                Previous Assigments
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="new-assignment?id=<?php echo $course['id'] ?>" class="btn btn-primary btn-sm">
+                                                                New Assignment
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
