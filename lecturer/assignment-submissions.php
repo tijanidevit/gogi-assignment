@@ -6,13 +6,15 @@
     }
     $lecturer = $_SESSION['gogi_lecturer'];
 
-    include_once '../core/lecturers.class.php';
+    include_once '../core/assignments.class.php';
     include_once '../core/core.function.php';
-    $lecturer_obj = new Lecturers();
+    $assignment_obj = new assignments();
     $lecturer_id = $lecturer['id'];
+    $assignment_id = $_GET['id'];
 
-    $assignment_solutions = $lecturer_obj->fetch_limited_lecturer_assignment_submissions($lecturer_id,4);
-    $assignments = $lecturer_obj->fetch_limited_lecturer_assignments($lecturer_id,10);
+    $assignment = $assignment_obj->fetch_assignment($assignment_id);
+    $ungraded_submissions = $assignment_obj->fetch_ungraded_assignment_submissions($assignment_id);
+    $graded_submissions = $assignment_obj->fetch_graded_assignment_submissions($assignment_id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,8 +56,8 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Computer Animation and Graphics</h3>
-                            <p class="text-muted">Today is another good day.</p>
+                            <h3><?php echo $assignment['title'] ?></h3>
+                            <p class="text-muted"><?php echo $assignment['question'] ?></p>
                         </div>
                     </div>
 
@@ -66,105 +68,29 @@
                                     <h6 class="card-title">Ungraded Submissions </h6>
                                     <div class="timeline card-scroll" style="height: 800px">
 
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
+                                        <?php foreach ($ungraded_submissions as $submission): ?>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                            <?php echo $submission['fullname'] ?> submitted a new solution
+                                                        </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            <?php echo $submission['solution'] ?> <a href="solution-details?id=<?php echo $submission['id'] ?>" class="badge badge-sm badge-primary">Details</a>
+                                                        </div>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        Ismail Obadimu submitted a new solution
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate. <a href="solution-details" class="badge badge-sm badge-primary">Details</a>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        <?php endforeach ?>
 
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        Ismail Obadimu submitted a new solution
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate. <a href="solution-details" class="badge badge-sm badge-primary">Details</a>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        Ismail Obadimu submitted a new solution
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate. <a href="solution-details" class="badge badge-sm badge-primary">Details</a>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        Ismail Obadimu submitted a new solution
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate. <a href="solution-details" class="badge badge-sm badge-primary">Details</a>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

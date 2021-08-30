@@ -53,5 +53,28 @@
         function lecturer_assignments_num($status,$lecturer_id){
             return DB::num_row("SELECT id FROM assignments WHERE lecturer_id = ? ",[$lecturer_id]);
         }
+
+
+
+        #Assignment Submissions        
+
+        function fetch_graded_assignment_submissions($assignment_id){
+            return DB::fetchAll("SELECT *,assignment_submissions.id,assignment_submissions.created_at FROM assignment_submissions
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            LEFT OUTER JOIN courses on courses.id = assignments.course_id
+            WHERE feedback <> '' AND assignment_id = ?
+            ORDER BY assignment_submissions.id DESC ", [$assignment_id]);
+        }     
+
+        function fetch_ungraded_assignment_submissions($assignment_id){
+            return DB::fetchAll("SELECT *,assignment_submissions.id,assignment_submissions.created_at FROM assignment_submissions
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            LEFT OUTER JOIN courses on courses.id = assignments.course_id
+            WHERE feedback = '' AND assignment_id = ?
+            ORDER BY assignment_submissions.id DESC ", [$assignment_id]);
+        }
+
     }
 ?>

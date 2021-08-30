@@ -6,13 +6,12 @@
     }
     $lecturer = $_SESSION['gogi_lecturer'];
 
-    include_once '../core/lecturers.class.php';
+    include_once '../core/assignment_submissions.class.php';
     include_once '../core/core.function.php';
-    $lecturer_obj = new Lecturers();
-    $lecturer_id = $lecturer['id'];
+    $assignment_submission_obj = new assignment_submissions();
+    $assignment_submission_id = $_GET['id'];
 
-    $assignment_solutions = $lecturer_obj->fetch_limited_lecturer_assignment_submissions($lecturer_id,4);
-    $assignments = $lecturer_obj->fetch_limited_lecturer_assignments($lecturer_id,10);
+    $solution = $assignment_obj->fetch_assignment_submission($assignment_submission_id);
 ?>
 <!doctype html>
 <html lang="en">

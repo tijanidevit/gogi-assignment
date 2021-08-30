@@ -3,25 +3,47 @@
 
     class assignment_submissions extends DB{
 
-        function add_assignment_submission($customer_id,$type,$amount){
-            return DB::execute("INSERT INTO assignment_submissions(customer_id,type,amount) VALUES(?,?,?)", [$customer_id,$type,$amount]);
+        function add_assignment_submission($student_id,$type,$amount){
+            return DB::execute("INSERT INTO assignment_submissions(student_id,type,amount) VALUES(?,?,?)", [$student_id,$type,$amount]);
         }
         function fetch_assignment_submissions(){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
-            LEFT OUTER JOIN customers on customers.id = assignment_submissions.customer_id
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN courses on courses.id = assignment_submissions.course_id
             ORDER BY assignment_submissions.id DESC ", []);
         }
 
         function fetch_limited_assignment_submissions($status,$limit){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
-            LEFT OUTER JOIN customers on customers.id = assignment_submissions.customer_id
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN courses on courses.id = assignment_submissions.course_id
             WHERE status = ? LIMIT $limit
             ORDER BY assignment_submissions.id DESC ", [$status]);
         }
 
-        function fetch_assignment_submission($id){
-            return DB::fetch("SELECT * FROM assignment_submissions WHERE id = ? ",[$id] );
+        function fetch_graded_assignment_submissions(){
+            return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN courses on courses.id = assignment_submissions.course_id
+            WHERE feedback <> ''
+            ORDER BY assignment_submissions.id DESC ", []);
         }
+
+        function fetch_ungraded_assignment_submissions(){
+            return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN courses on courses.id = assignment_submissions.course_id
+            WHERE feedback = '' 
+            ORDER BY assignment_submissions.id DESC ", []);
+        }
+
+        function fetch_assignment_submission($id){
+            return DB::fetch("SELECT * FROM assignment_submissions             
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            LEFT OUTER JOIN courses on courses.id = assignment_submissions.course_id
+            WHERE id = ? ",[$id] );
+        }
+
         function delete_assignment_submission($id){
             return DB::execute("DELETE FROM assignment_submissions WHERE id = ? ",[$id] );
         }
@@ -34,20 +56,20 @@
             return DB::num_row("SELECT id FROM assignment_submissions ", []);
         }
 
-        function fetch_customer_assignment_submissions($status,$customer_id){
+        function fetch_student_assignment_submissions($status,$student_id){
             return DB::fetchAll("SELECT *,assignment_submissions.details,assignment_submissions.id FROM assignment_submissions
-            LEFT OUTER JOIN customers on customers.id = assignment_submissions.customer_id
-            where status = ? and (amount = ? or profit = ?) ORDER BY assignment_submissions.id DESC ",[$status,$customer_id,$customer_id]);
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            where status = ? and (amount = ? or profit = ?) ORDER BY assignment_submissions.id DESC ",[$status,$student_id,$student_id]);
         }
 
-        function fetch_customer_last_assignment_submission($customer_id){
+        function fetch_student_last_assignment_submission($student_id){
             return DB::fetch("SELECT *,assignment_submissions.details,assignment_submissions.id FROM assignment_submissions
-            where (amount = ? or profit = ?) ORDER BY assignment_submissions.id DESC LIMIT 1 ",[$customer_id,$customer_id]);
+            where (amount = ? or profit = ?) ORDER BY assignment_submissions.id DESC LIMIT 1 ",[$student_id,$student_id]);
         }
 
-        function customer_assignment_submissions_num($status,$customer_id){
+        function student_assignment_submissions_num($status,$student_id){
             return DB::num_row("SELECT DISTINCT *,assignment_submissions.details,assignment_submissions.id FROM assignment_submissions
-            where status = ? and (amount = ? or profit = ?) ORDER BY assignment_submissions.id ASC ",[$status,$customer_id,$customer_id]);
+            where status = ? and (amount = ? or profit = ?) ORDER BY assignment_submissions.id ASC ",[$status,$student_id,$student_id]);
         }
     }
 ?>
