@@ -5,14 +5,15 @@
         exit();
     }
     $lecturer = $_SESSION['gogi_lecturer'];
+    $course_id = $_GET['id'];
 
-    include_once '../core/lecturers.class.php';
+    include_once '../core/courses.class.php';
     include_once '../core/core.function.php';
-    $lecturer_obj = new Lecturers();
+    $course_obj = new courses();
     $lecturer_id = $lecturer['id'];
 
-    $assignment_solutions = $lecturer_obj->fetch_limited_lecturer_assignment_submissions($lecturer_id,4);
-    $assignments = $lecturer_obj->fetch_limited_lecturer_assignments($lecturer_id,10);
+    $assignments = $course_obj->fetch_course_assignments($course_id);
+    $course = $course_obj->fetch_course($course_id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,12 +55,12 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Computer Graphics &amp; Animations</h3>
+                            <h3><?php echo $course['course_title'] ?></h3>
                             <p class="text-muted">COM 202</p>
                         </div>
                         <div class="mt-3 mt-md-0">
                             <div class="btn btn-outline-light">
-                                <a href="new-assignment" class="btn btn-primary"> New Assignment </a>
+                                <a href="new-assignment?id=<?php echo $course_id ?>" class="btn btn-primary"> New Assignment </a>
                             </div>
                         </div>
                     </div>
@@ -70,125 +71,34 @@
                                 <div class="card-body">
                                     <div class="timeline card-scroll" style="height: 800px">
 
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        <span class="link-1">In not less thant 500 words, expain the meaning of Animation Frame</span>
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate.
+                                        <?php foreach ($assignments as $assignment): ?>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                            <span class="link-1"><?php echo $assignment['title'] ?></span>
+                                                        </span>
+                                                        <span class="text-muted font-weight-normal"><?php echo format_date($assignment['created_at']) ?></span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            <?php echo $assignment['question'] ?>
 
-                                                        <div class="mt-2">
-                                                            <a href="assignment-details" class="badge badge-sm badge-secondary">View Details</a>
-                                                            <a href="assignment-submissions" class="badge badge-sm badge-primary">View Submissions</a>
+                                                            <div class="mt-2">
+                                                                <a href="assignment-details?id=<?php echo $assignment['id'] ?>" class="badge badge-sm badge-secondary">View Details</a>
+                                                                <a href="assignment-submissions?id=<?php echo $assignment['id'] ?>" class="badge badge-sm badge-primary">View Submissions</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </a>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php endforeach ?>
 
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        <span class="link-1">In not less thant 500 words, expain the meaning of Animation Frame</span>
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate.
-
-                                                        <div class="mt-2">
-                                                            <a href="assignment-details" class="badge badge-sm badge-secondary">View Details</a>
-                                                            <a href="assignment-submissions" class="badge badge-sm badge-primary">View Submissions</a>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        <span class="link-1">In not less thant 500 words, expain the meaning of Animation Frame</span>
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate.
-
-                                                        <div class="mt-2">
-                                                            <a href="assignment-details" class="badge badge-sm badge-secondary">View Details</a>
-                                                            <a href="assignment-submissions" class="badge badge-sm badge-primary">View Submissions</a>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="timeline-item">
-                                            <div>
-                                                <figure class="avatar avatar-sm mr-3 bring-forward">
-                                                    <span class="avatar-title bg-success-bright text-success rounded-circle">A</span>
-                                                </figure>
-                                            </div>
-                                            <div>
-                                                <h6 class="d-flex justify-content-between mb-4">
-                                                    <span>
-                                                        <span class="link-1">In not less thant 500 words, expain the meaning of Animation Frame</span>
-                                                    </span>
-                                                    <span class="text-muted font-weight-normal">Tue 8:17pm</span>
-                                                </h6>
-                                                <a href="#">
-                                                    <div class="mb-3 border p-3 border-radius-1">
-                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid
-                                                        aperiam commodi culpa debitis deserunt enim itaque laborum minima neque
-                                                        nostrum pariatur perspiciatis, placeat quidem, ratione recusandae
-                                                        reiciendis sapiente, ut veritatis vitae. Beatae dolore hic odio! Esse
-                                                        officiis quidem voluptate.
-
-                                                        <div class="mt-2">
-                                                            <a href="assignment-details" class="badge badge-sm badge-secondary">View Details</a>
-                                                            <a href="assignment-submissions" class="badge badge-sm badge-primary">View Submissions</a>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

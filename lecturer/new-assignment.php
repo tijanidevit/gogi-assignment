@@ -5,16 +5,19 @@
         exit();
     }
     $lecturer = $_SESSION['gogi_lecturer'];
+    $course_id = $_GET['id'];
 
     include_once '../core/lecturers.class.php';
+    include_once '../core/courses.class.php';
     include_once '../core/core.function.php';
-    $lecturer_obj = new Lecturers();
-    $lecturer_id = $lecturer['id'];
+    $course_obj = new courses();
 
-    $assignment_solutions = $lecturer_obj->fetch_limited_lecturer_assignment_submissions($lecturer_id,4);
-    $assignments = $lecturer_obj->fetch_limited_lecturer_assignments($lecturer_id,10);
+
+    $course = $course_obj->fetch_course($course_id);
+
+    $lecturer_id = $lecturer['id'];
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -47,7 +50,7 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Computer Animation and Graphics</h3>
+                            <h3><?php echo $course['course_title'] ?></h3>
                         </div>
 
                     </div>
@@ -56,53 +59,112 @@
 
                         <div class="card" id="review-section">
                             <div class="card-body">
-                                <form action="" enctype="multipart/form-data" method="post">
-                                    <div class="form-group">
-                                        <label for="">Title</label>
-                                        <input type="text" name="title" class="form-control" required="required" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Description</label>
-                                        <textarea name="description" class="form-control" required="required"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Score</label>
-                                        <input type="text" name="score" class="form-control" required="required" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Attachment</label>
-                                        <input type="file" name="file" class="form-control" required="required" />
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <button class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                                <form id="assignmentForm" method="post">
+                                    <div id="result"></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Title</label>
+                                                <input type="text" name="title" class="form-control" required="required" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Question</label>
+                                                <input type="text" name="question" class="form-control" required="required" />
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Score</label>
+                                                <input type="text" name="max_grade" class="form-control" required="required" />
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="course_id" value="<?php echo $course_id ?>">
+                                        <input type="hidden" name="lecturer_id" value="<?php echo $lecturer_id ?>">
+
+                                        <div class="col-md-6">
+                                         <div class="form-group">
+                                            <label for="">Submission Deadline</label>
+                                            <input type="date" name="deadline" class="form-control" required="required" />
+                                        </div>
+                                    </div> 
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Instruction</label>
+                                    <textarea name="instructions" class="form-control" required="required"></textarea>
+                                </div>
+                                <div class="form-group text-center">
+                                    <button class="btn btn-primary" type="submit">
+                                        <span class="spinner" id="spinner" style="display: none;">
+                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                        </span>
+                                        <span class="btnText">
+                                            Submit
+                                        </span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
-
                 </div>
-                <!-- ../ Content -->
 
-                <!-- Footer -->
 
-                <?php include "includes/footer.php"; ?>
-
-                <!-- ../ Footer -->
             </div>
-            <!-- ../ Content body -->
+            <!-- ../ Content -->
+
+            <!-- Footer -->
+
+            <?php include "includes/footer.php"; ?>
+
+            <!-- ../ Footer -->
         </div>
-        <!-- ../ Content wrapper -->
+        <!-- ../ Content body -->
     </div>
-    <!-- ../ Layout wrapper -->
+    <!-- ../ Content wrapper -->
+</div>
+<!-- ../ Layout wrapper -->
 
-    <!-- Main scripts -->
-    <script src="../vendors/bundle.js"></script>
+<!-- Main scripts -->
+<script src="../vendors/bundle.js"></script>
 
-    <!-- App scripts -->
-    <script src="../assets/js/app.min.js"></script>
+<!-- App scripts -->
+<script src="../assets/js/app.min.js"></script>
 </body>
 
 </html>
+
+<script>
+    $('#assignmentForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'ajax/add_assignment.php',
+            type: 'POST',
+            data : $(this).serialize(),
+            cache: false,
+            beforeSend: function() {
+                $('#spinner').show();
+                $('#result').hide();
+                $('#btnText').hide();
+            },
+            success: function(data){
+                if (data != NaN) {
+                    location.href = 'assignment-details?id='+data;
+                }
+                else{
+                    $('#result').html(data);
+                    $('#result').fadeIn();
+                    $('#spinner').hide();
+                    $('#btnText').show();
+                }
+            }
+        })
+    })
+</script>

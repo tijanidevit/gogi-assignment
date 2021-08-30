@@ -3,8 +3,8 @@
 
     class assignments extends DB{
 
-        function add_assignment($customer_id,$type,$amount){
-            return DB::execute("INSERT INTO assignments(customer_id,type,amount) VALUES(?,?,?)", [$customer_id,$type,$amount]);
+        function add_assignment($course_id,$lecturer_id,$title,$question,$instructions,$deadline,$max_grade){
+            return DB::execute("INSERT INTO assignments(course_id,lecturer_id,title,question,instructions,deadline,max_grade) VALUES(?,?,?,?,?,?,?)", [$course_id,$lecturer_id,$title,$question,$instructions,$deadline,$max_grade]);
         }
         function fetch_assignments(){
             return DB::fetchAll("SELECT *,assignments.id FROM assignments
@@ -40,14 +40,12 @@
             where status = ? and (amount = ? or profit = ?) ORDER BY assignments.id DESC ",[$status,$customer_id,$customer_id]);
         }
 
-        function fetch_customer_last_assignment($customer_id){
-            return DB::fetch("SELECT *,assignments.details,assignments.id FROM assignments
-            where (amount = ? or profit = ?) ORDER BY assignments.id DESC LIMIT 1 ",[$customer_id,$customer_id]);
+        function fetch_lecturer_last_assignment($lecturer_id){
+            return DB::fetch("SELECT id FROM assignments WHERE lecturer_id = ? DESC LIMIT 1 ",[$lecturer_id]);
         }
 
-        function customer_assignments_num($status,$customer_id){
-            return DB::num_row("SELECT DISTINCT *,assignments.details,assignments.id FROM assignments
-            where status = ? and (amount = ? or profit = ?) ORDER BY assignments.id ASC ",[$status,$customer_id,$customer_id]);
+        function lecturer_assignments_num($status,$lecturer_id){
+            return DB::num_row("SELECT id FROM assignments WHERE lecturer_id = ? ",[$lecturer_id]);
         }
     }
 ?>

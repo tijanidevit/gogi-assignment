@@ -48,7 +48,7 @@
         function fetch_course_assignments($course_id){
             return DB::fetchAll("SELECT *,assignments.id FROM assignments
             JOIN courses on courses.id = assignments.course_id
-            WHERE assignments.course_id = ? AND  assignments.status = 1
+            WHERE assignments.course_id = ? 
             ORDER BY assignments.id DESC ",[$course_id]);
         }
 
