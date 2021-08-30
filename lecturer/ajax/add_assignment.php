@@ -49,8 +49,7 @@ function add_assignment(){
 	// 	return  displayWarning('A assignment already add_assignmented with this question '. $question);
 	// }
 	if ($assignment_obj->add_assignment($course_id,$lecturer_id,$title,$question,$instructions,$deadline,$max_grade)) {
-		$last_assignment_added = $assignment_obj->fetch_lecturer_last_assignment($lecturer_id)['id'];
-		return 1;
+		return $assignment_obj->fetch_lecturer_last_assignment($lecturer_id)['id'];
 	}
 	else{
 		return displayError('Unable to add');

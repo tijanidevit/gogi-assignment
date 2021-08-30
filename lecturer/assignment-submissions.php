@@ -122,7 +122,7 @@
                                                         </td>
                                                         <td><?php echo format_date($submission['created_at']) ?></td>
                                                         <td>
-                                                            <a href="solution-details" class="btn btn-primary btn-sm">View</a>
+                                                            <a href="solution-details?id=<?php echo $submission['id'] ?>" class="btn btn-primary btn-sm">View</a>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach ?>

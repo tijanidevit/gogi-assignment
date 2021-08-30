@@ -80,13 +80,15 @@
                         <div class="card" id="review-section">
                             <div class="card-body">
                                 <?php if ($solution['feedback'] == ''): ?>
-                                    <form action="">
+                                    <form id="reviewForm">
+                                        <div id="result"></div>
                                         <div class="form-group">
                                             <label for="">Your Review</label>
                                             <textarea name="feedback" class="form-control" required="required"></textarea>
                                         </div>
+                                        <input type="hidden" name="assignment_submission_id" value="<?php echo $assignment_submission_id ?>">
                                         <div class="form-group">
-                                            <label for="">Grade Score</label>
+                                            <label for="">Grade Score (Maximum Grade: <?php echo $solution['max_grade'] ?>)</label>
                                             <input type="text" name="grade" class="form-control" required="required" />
                                         </div>
                                         <div class="form-group text-center">

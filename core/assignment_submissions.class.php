@@ -60,5 +60,13 @@
         function assignment_submissions_num(){
             return DB::num_row("SELECT id FROM assignment_submissions ", []);
         }
+       
+        function check_review_existence($id){
+            return DB::num_row("SELECT id FROM assignment_submissions WHERE id = ? AND feedback <> '' ", [$id]);
+        } 
+       
+        function review_assignment($grade,$feedback,$id){
+            return DB::execute("UPDATE assignment_submissions SET grade = ?, feedback = ? WHERE id = ? ", [$grade,$feedback,$id]);
+        } 
     }
 ?>
