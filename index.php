@@ -1,4 +1,11 @@
-<!doctype html>
+<?php 
+    session_start();
+    if (isset($_SESSION['gogi_student'])) {
+        header('location: dashboard');
+        exit();
+    }
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -100,3 +107,30 @@
 </body>
 
 </html>
+<script>
+    $('#loginForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'ajax/login.php',
+            type: 'POST',
+            data : $(this).serialize(),
+            cache: false,
+            beforeSend: function() {
+                $('#spinner').show();
+                $('#result').hide();
+                $('#btnText').hide();
+            },
+            success: function(data){
+                if (data == 1) {
+                    location.href = 'dashboard';
+                }
+                else{
+                    $('#result').html(data);
+                    $('#result').fadeIn();
+                    $('#spinner').hide();
+                    $('#btnText').show();
+                }
+            }
+        })
+    })
+</script>
