@@ -199,16 +199,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>COM 101</td>
-                                                    <td>What is your name?</td>
-                                                    <td>
-                                                        <span class="badge bg-secondary-bright text-secondary">60/100</span>
-                                                    </td>
-                                                    <td>2020/02/28</td>
-                                                    <td></td>
-                                                </tr>
+                                                <?php $sn = 0; foreach ($ungraded_assignments as $assignment): $sn++ ?>
+                                                    <tr>
+                                                        <td><?php echo $sn ?></td>
+                                                        <td><?php echo $assignment['course_code'] ?></td>
+                                                        <td><?php echo $assignment['title'] ?></td>
+                                                        <td>
+                                                            Not Graded Yet!
+                                                        </td>
+                                                        <td><?php echo format_date($assignment['created_at']) ?></td>
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
