@@ -13,12 +13,12 @@
             ORDER BY assignments.id DESC ", []);
         }
 
-        function fetch_limited_assignments($status,$limit){
+        function fetch_limited_assignments($limit){
             return DB::fetchAll("SELECT *,assignments.id,assignments.created_at FROM assignments
             LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
-            WHERE status = ? LIMIT $limit
-            ORDER BY assignments.id DESC ", [$status]);
+            
+            ORDER BY assignments.id DESC LIMIT $limit", []);
         }
 
         function fetch_assignment($id){

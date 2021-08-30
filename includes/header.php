@@ -54,7 +54,7 @@
                                 <div class="mb-3 small text-center text-muted">@bonygidden</div>
                             </div>
                             <div class="list-group">
-                                <a href="logout" class="list-group-item text-danger" data-sidebar-target="#settings">Sign Out!</a>
+                                <a href="logout" class="list-group-item text-danger">Sign Out!</a>
                             </div>
                         </div>
                     </li>

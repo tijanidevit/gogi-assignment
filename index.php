@@ -73,7 +73,7 @@
                                 <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="form-group d-flex justify-content-between">
                                 <div class="custom-control custom-checkbox">

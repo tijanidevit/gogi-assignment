@@ -41,9 +41,11 @@
         }
 
         ###### student's Assignment_submissions
+        function student_assignments_num($student_id){
+            return DB::num_row("SELECT id FROM assignment_submissions WHERE student_id = ? ",[$student_id]);
+        }
         function fetch_student_assignment_submissions($student_id){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
-            JOIN students on students.id = assignment_submissions.student_id
             JOIN assignments on assignments.id = assignment_submissions.assignment_id
             JOIN courses on courses.id = assignments.course_id
             WHERE assignment_submissions.student_id = ?
@@ -52,11 +54,29 @@
 
         function fetch_limited_student_assignment_submissions($student_id,$limit){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
-            JOIN students on students.id = assignment_submissions.student_id
             JOIN assignments on assignments.id = assignment_submissions.assignment_id
             JOIN courses on courses.id = assignments.course_id
             WHERE assignment_submissions.student_id = ?
             ORDER BY assignment_submissions.id DESC LIMIT $limit",[$student_id]);
+        }
+
+
+        function fetch_limited_graded_assignment_submissions($student_id,$limit){
+            return DB::fetchAll("SELECT *,assignment_submissions.id,assignment_submissions.created_at FROM assignment_submissions
+            LEFT OUTER JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
+            LEFT OUTER JOIN courses on courses.id = assignments.course_id
+            WHERE feedback <> '' AND student_id = ? 
+            ORDER BY assignment_submissions.id DESC LIMIT $limit", [$student_id]);
+        }
+
+        function fetch_limited_ungraded_assignment_submissions($student_id,$limit){
+            return DB::fetchAll("SELECT *,assignment_submissions.id,assignment_submissions.created_at FROM assignment_submissions
+            LEFT OUTER JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
+            LEFT OUTER JOIN courses on courses.id = assignments.course_id
+            WHERE feedback = '' AND student_id = ?  
+            ORDER BY assignment_submissions.id DESC LIMIT $limit", [$student_id]);
         }
     }
 ?>
