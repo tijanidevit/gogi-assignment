@@ -11,7 +11,7 @@
     $assignment_submission_obj = new assignment_submissions();
     $assignment_submission_id = $_GET['id'];
 
-    $solution = $assignment_obj->fetch_assignment_submission($assignment_submission_id);
+    $solution = $assignment_submission_obj->fetch_assignment_submission($assignment_submission_id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -46,8 +46,8 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Computer Animation and Graphics</h3>
-                            <p class="text-muted">Sent since 2 days ago</p>
+                            <h3><?php echo $solution['title'] ?></h3>
+                            <p class="text-muted">Submitted on <?php echo format_date($solution['created_at']) ?></p>
                         </div>
 
                     </div>
@@ -62,40 +62,54 @@
                                         </span>
                                     </div>
                                     <div class="flex-grow- 1">
-                                        <h6 class="mb-1">Cass Queyeiro</h6>
+                                        <h6 class="mb-1"><?php echo $solution['fullname'] ?></h6>
                                         <span class="text-muted">
-                                            Computer Chat
+                                            <?php echo $solution['matric_no'] ?>
                                         </span>
                                     </div>
                                     <div class="text-right ml-auto d-flex">
-
-                                        <a href="#review-section" class="btn btn-primary mr-4">Grade Assignment</a>
+                                        <a href="#review-section" class="btn btn-primary mr-4"><?php if ($solution['feedback'] == ''): ?>Grade Assignment <?php else: ?> View Grading<?php endif ?></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur.</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
+                                
+                                <p><?php echo $solution['solution'] ?></p>
                             </div>
                         </div>
                         <div class="card" id="review-section">
                             <div class="card-body">
-                                <form action="">
-                                    <div class="form-group">
-                                        <label for="">Your Review</label>
-                                        <textarea name="review" class="form-control" required="required"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Grade Score</label>
-                                        <input type="text" name="grade" class="form-control" required="required" />
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <button class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
+                                <?php if ($solution['feedback'] == ''): ?>
+                                    <form action="">
+                                        <div class="form-group">
+                                            <label for="">Your Review</label>
+                                            <textarea name="feedback" class="form-control" required="required"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Grade Score</label>
+                                            <input type="text" name="grade" class="form-control" required="required" />
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary">
+                                                <span class="spinner" id="spinner" style="display: none;">
+                                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                </span>
+                                                <span class="btnText">
+                                                    Submit
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                <?php else: ?>
+                                    <h5>Your Review</h5>
+                                    <p><?php echo $solution['feedback'] ?></p>
+
+                                    <h5>Grade</h5>
+                                    <p><?php echo $solution['grade'].'/'.$solution['max_grade'] ?></p>
+                                <?php endif ?>
+                                
                             </div>
                         </div>
 
@@ -125,3 +139,31 @@
 </body>
 
 </html>
+
+<script>
+    $('#reviewForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url:'ajax/review_assignment.php',
+            type: 'POST',
+            data : $(this).serialize(),
+            cache: false,
+            beforeSend: function() {
+                $('#spinner').show();
+                $('#result').hide();
+                $('#btnText').hide();
+            },
+            success: function(data){
+                if (data == 1) {
+                    location.reload();
+                }
+                else{
+                    $('#result').html(data);
+                    $('#result').fadeIn();
+                    $('#spinner').hide();
+                    $('#btnText').show();
+                }
+            }
+        })
+    })
+</script>

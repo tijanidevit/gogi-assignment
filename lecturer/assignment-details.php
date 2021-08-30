@@ -47,11 +47,11 @@
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
                             <h3><?php echo $assignment['title'] ?> - <?php echo $assignment['course_title'] ?></h3>
-                            <p class="text-muted">Sent since 2 days ago</p>
+                            <p class="text-muted">Sent on <?php echo format_date($assignment['created_at']) ?></p>
                         </div>
                         <div class="mt-3 mt-md-0">
                             <div id="dashboard-date" class="bg-outline-light">
-                                <span class="p-3 bg-danger">Deadline: <?php echo $assignment['title'] ?></span>
+                                <span class="p-3 bg-danger">Deadline: <?php echo format_date($assignment['deadline']) ?></span>
                             </div>
                         </div>
                     </div>

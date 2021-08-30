@@ -7,14 +7,14 @@
             return DB::execute("INSERT INTO assignments(course_id,lecturer_id,title,question,instructions,deadline,max_grade) VALUES(?,?,?,?,?,?,?)", [$course_id,$lecturer_id,$title,$question,$instructions,$deadline,$max_grade]);
         }
         function fetch_assignments(){
-            return DB::fetchAll("SELECT *,assignments.id FROM assignments
+            return DB::fetchAll("SELECT *,assignments.id,assignments.created_at FROM assignments
             LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
             ORDER BY assignments.id DESC ", []);
         }
 
         function fetch_limited_assignments($status,$limit){
-            return DB::fetchAll("SELECT *,assignments.id FROM assignments
+            return DB::fetchAll("SELECT *,assignments.id,assignments.created_at FROM assignments
             LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
             WHERE status = ? LIMIT $limit
@@ -22,7 +22,7 @@
         }
 
         function fetch_assignment($id){
-            return DB::fetch("SELECT *,assignments.id FROM assignments
+            return DB::fetch("SELECT *,assignments.id,assignments.created_at FROM assignments
             LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
             WHERE assignments.id = ? ",[$id] );
@@ -40,7 +40,7 @@
         }
 
         function fetch_lecturer_assignments($status,$lecturer_id){
-            return DB::fetchAll("SELECT *,assignments.details,assignments.id FROM assignments
+            return DB::fetchAll("SELECT *,assignments.id,assignments.created_at FROM assignments
             LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
             where status = ? and (amount = ? or profit = ?) ORDER BY assignments.id DESC ",[$status,$lecturer_id,$lecturer_id]);

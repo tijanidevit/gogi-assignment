@@ -132,6 +132,7 @@
             beforeSend: function() {
                 $('#spinner').show();
                 $('#result').hide();
+                $('#btnText').hide();
             },
             success: function(data){
                 if (data == 1) {
@@ -141,6 +142,7 @@
                     $('#result').html(data);
                     $('#result').fadeIn();
                     $('#spinner').hide();
+                    $('#btnText').show();
                 }
             }
         })

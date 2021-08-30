@@ -78,9 +78,9 @@
                                                 <div>
                                                     <h6 class="d-flex justify-content-between mb-4">
                                                         <span>
-                                                            <?php echo $submission['fullname'] ?> submitted a new solution
+                                                            <?php echo $submission['fullname'] ?> (<?php echo $submission['matric_no'] ?>) submitted a new solution
                                                         </span>
-                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                        <span class="text-muted font-weight-normal"><?php echo format_date($submission['created_at']) ?></span>
                                                     </h6>
                                                     <a href="#">
                                                         <div class="mb-3 border p-3 border-radius-1">
@@ -112,18 +112,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1 </td>
-                                                    <td>COM 101</td>
-                                                    <td>What is your name?</td>
-                                                    <td>
-                                                        <span class="badge bg-secondary-bright text-secondary">60/100</span>
-                                                    </td>
-                                                    <td>2020/02/28</td>
-                                                    <td>
-                                                        <a href="solution-details" class="btn btn-primary btn-sm">View</a>
-                                                    </td>
-                                                </tr>
+                                                <?php $sn=0; foreach ($graded_submissions as $submission): $sn++ ?>
+                                                    <tr>
+                                                        <td><?php echo $sn ?></td>
+                                                        <td><?php echo $submission['fullname'] ?></td>
+                                                        <td><?php echo $submission['matric_no'] ?></td>
+                                                        <td>
+                                                            <span class="badge bg-secondary-bright text-secondary"><?php echo $submission['grade'] ?>/<?php echo $assignment['max_grade'] ?></span>
+                                                        </td>
+                                                        <td><?php echo format_date($submission['created_at']) ?></td>
+                                                        <td>
+                                                            <a href="solution-details" class="btn btn-primary btn-sm">View</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
