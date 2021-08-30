@@ -1,18 +1,16 @@
 <?php 
     session_start();
-    if (!isset($_SESSION['gogi_lecturer'])) {
+    if (!isset($_SESSION['gogi_course'])) {
         header('location: ./');
         exit();
     }
-    $lecturer = $_SESSION['gogi_lecturer'];
+    $course = $_SESSION['gogi_course'];
 
-    include_once '../core/lecturers.class.php';
+    include_once '../core/courses.class.php';
     include_once '../core/core.function.php';
-    $lecturer_obj = new Lecturers();
-    $lecturer_id = $lecturer['id'];
+    $course_obj = new courses();
 
-    $assignment_solutions = $lecturer_obj->fetch_limited_lecturer_assignment_submissions($lecturer_id,4);
-    $assignments = $lecturer_obj->fetch_limited_lecturer_assignments($lecturer_id,10);
+    $courses = $course_obj->fetch_courses();
 ?>
 <!doctype html>
 <html lang="en">
