@@ -42,9 +42,10 @@
         }
 
         function fetch_assignment_submission($id){
-            return DB::fetch("SELECT *,assignment_submissions.id,assignment_submissions.created_at FROM assignment_submissions             
-            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
+            return DB::fetch("SELECT *,assignment_submissions.id,assignment_submissions.created_at,lecturers.image AS lec_image,lecturers.fullname AS lec_name FROM assignment_submissions             
             LEFT OUTER JOIN assignments on assignments.id = assignment_submissions.assignment_id
+            LEFT OUTER JOIN lecturers on lecturers.id = assignments.lecturer_id
+            LEFT OUTER JOIN students on students.id = assignment_submissions.student_id
             LEFT OUTER JOIN courses on courses.id = assignments.course_id
             WHERE assignment_submissions.id = ? ",[$id] );
         }

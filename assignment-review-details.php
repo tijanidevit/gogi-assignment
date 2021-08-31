@@ -1,3 +1,26 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['gogi_student'])) {
+        header('location: ./');
+        exit();
+    }
+
+    include_once 'core/students.class.php';
+    include_once 'core/assignment_submissions.class.php';
+    include_once 'core/core.function.php';
+    $student_obj = new Students();
+    $assignment_submission_obj = new Assignment_submissions();
+
+    $student = $_SESSION['gogi_student'];
+    $student_id = $student['id'];
+    $submission_id = $_GET['id'];
+
+    $submission = $assignment_submission_obj->fetch_assignment_submission($submission_id);
+    $submission_was_reviewed = false;
+    if ($submission['feedback'] != '') {
+        $submission_was_reviewed = true;
+    }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -31,48 +54,54 @@
                 <div class="content ">
                     <div class="page-header d-md-flex justify-content-between">
                         <div>
-                            <h3>Computer Animation and Graphics</h3>
-                            <p class="text-muted">Sent since 2 days ago</p>
+                            <h3><?php echo $submission['title'] ?></h3>
+                            <p class="text-muted"><?php echo format_date($submission['created_at']) ?></p>
                         </div>
 
                     </div>
 
                     <div class="row">
-                        <div class="card">
+                        <div class="card" style="width: 100%">
                             <div class="card-header">
-                                <div class="d-flex py-3 align-items-start">
-                                    <div class="pr-3">
-                                        <span class="avatar avatar-state-success">
-                                            <img src="./assets/media/image/user/women_avatar3.jpg" class="rounded-circle" alt="image">
-                                        </span>
-                                    </div>
-                                    <div class="flex-grow- 1">
-                                        <h6 class="mb-1">Cass Queyeiro</h6>
-                                        <span class="text-muted">
-                                            Computer Chat
-                                        </span>
-                                    </div>
-                                    <div class="text-right ml-auto d-flex">
+                                <div class="pr-3">
+                                    <span class="avatar avatar-state-success">
+                                        <img src="./uploads/lecturers/images/<?php echo $submission['lec_image'] ?>" class="rounded-circle" alt="image">
+                                    </span>
+                                </div>
+                                <div class="flex-grow- 1">
+                                    <h6 class="mb-1"><?php echo $submission['lec_name'] ?></h6>
+                                    <span class="text-muted">
+                                        <?php echo $submission['course_title'] ?>
+                                    </span>
+                                </div>
 
-                                        <a href="assignment-details" class="btn btn-primary mr-4">View Assignment Detail</a>
-                                        <a href="chat?id=2" class="btn btn-info">Initiate Chat</a>
-                                    </div>
+                                <div class="text-right ml-auto d-flex">
+
+                                    <a href="assignment-details?id=<?php echo $submission['assignment_id'] ?>" class="btn btn-primary mr-4">View Assignment Details</a>
+                                    
+                                    <?php if ($submission_was_reviewed): ?>
+                                        <a href="chat?id=<?php echo $submission['id'] ?>" class="btn btn-info">Initiate Chat</a>
+                                    <?php endif ?>
+                                    
                                 </div>
                             </div>
+
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4" style="border-right: 1px solid #ccc;">
                                         <h3>Your Answer</h3>
                                         <p>
-                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur quo et laborum corrupti inventore in qui reiciendis molestiae consequuntur voluptatum, eum fugit necessitatibus! Nam modi suscipit ex. Asperiores, sint aliquam.
+                                            <?php echo $submission['solution'] ?>
                                         </p>
                                     </div>
                                     <div class="col-md-8">
                                         <h3>Feedback from lecturer</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, vel perferendis. Asperiores in laborum sapiente velit exercitationem fugiat nam aspernatur. Accusamus voluptas enim reprehenderit et. Similique quam mollitia pariatur vel. Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis enim fugit ipsam nihil sint cumque, voluptas iste rem perspiciatis! Sint necessitatibus porro doloremque cum nisi facere saepe aliquid earum! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam optio quam ipsum, repellat facilis ullam itaque temporibus dolore neque distinctio, quas quasi culpa consectetur quod impedit perspiciatis dolores repudiandae sapiente?</p>
+                                        <?php if ($submission_was_reviewed): ?>
+                                            <p><strong>Score:</strong> <?php echo $submission['grade'] ?></p>
+                                            <p><?php echo $submission['feedback'] ?></p>
+                                        <?php else: ?>
+                                            <p>Your submission has not been reviewed yet!</p>
+                                        <?php endif ?>
                                     </div>
                                 </div>
                             </div>
