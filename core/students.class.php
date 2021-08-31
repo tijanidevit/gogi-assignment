@@ -44,6 +44,7 @@
         function student_assignments_num($student_id){
             return DB::num_row("SELECT id FROM assignment_submissions WHERE student_id = ? ",[$student_id]);
         }
+
         function fetch_student_assignment_submissions($student_id){
             return DB::fetchAll("SELECT *,assignment_submissions.id FROM assignment_submissions
             JOIN assignments on assignments.id = assignment_submissions.assignment_id

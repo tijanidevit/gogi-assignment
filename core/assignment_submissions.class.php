@@ -68,5 +68,16 @@
         function review_assignment($grade,$feedback,$id){
             return DB::execute("UPDATE assignment_submissions SET grade = ?, feedback = ? WHERE id = ? ", [$grade,$feedback,$id]);
         } 
+
+
+
+       
+        function check_student_assignment_submission($assignment_id,$student_id){
+            return DB::num_row("SELECT id FROM assignment_submissions WHERE assignment_id = ? AND student_id = ? ", [$assignment_id,$student_id]);
+        }
+
+        function fetch_student_assignment_submission($assignment_id,$student_id){
+            return DB::fetch("SELECT * FROM assignment_submissions WHERE assignment_id = ? AND student_id = ? ", [$assignment_id,$student_id]);
+        }
     }
 ?>
