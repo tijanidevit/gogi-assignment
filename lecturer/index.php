@@ -119,8 +119,6 @@
 
 </html>
 
-
-
 <script>
     $('#loginForm').submit(function(e){
         e.preventDefault();
